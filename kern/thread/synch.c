@@ -188,7 +188,7 @@ void
 lock_acquire(struct lock *lock)
 {
 	/* Call this (atomically) before waiting for a lock */
-	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
+	HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
 
 	// Write this
 	spinlock_acquire(&lock->lk_lock);
@@ -203,14 +203,14 @@ lock_acquire(struct lock *lock)
 	//(void)lock;  // suppress warning until code gets written
 
 	/* Call this (atomically) once the lock is acquired */
-	//HANGMAN_ACQUIRE(&curthread->t_hangman, &lock->lk_hangman);
+	HANGMAN_ACQUIRE(&curthread->t_hangman, &lock->lk_hangman);
 }
 
 void
 lock_release(struct lock *lock)
 {
 	/* Call this (atomically) when the lock is released */
-	//HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
+	HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
 
 	// Write this
 	spinlock_acquire(&lock->lk_lock);
