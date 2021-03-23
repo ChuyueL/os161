@@ -193,7 +193,7 @@ lock_acquire(struct lock *lock)
 	// Write this
 	spinlock_acquire(&lock->lk_lock);
 	if (lock->heldBy == NULL) {
-		lock->heldBy = &curthread;
+		lock->heldBy = curthread;
 	}
 	else {
 		wchan_sleep(lock->lk_wchan, &lock->lk_lock);
@@ -234,7 +234,7 @@ lock_do_i_hold(struct lock *lock)
 
 	//return true; // dummy until code gets written
 
-	return lock->heldBy == &curthread;
+	return lock->heldBy == curthread;
 }
 
 ////////////////////////////////////////////////////////////
