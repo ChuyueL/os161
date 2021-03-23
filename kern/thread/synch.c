@@ -156,7 +156,7 @@ lock_create(const char *name)
 	
 	lock->lk_chan = wchan_create(lock->lk_name);
 		if (lock->lk_chan == NULL) {
-			return NULL
+			return NULL;
 		}
 
 	//HANGMAN_LOCKABLEINIT(&lock->lk_hangman, lock->lk_name);
@@ -167,7 +167,7 @@ lock_create(const char *name)
 }
 
 void
-lock_destroy(struct lock *lock);
+lock_destroy(struct lock *lock)
 {
 	KASSERT(lock != NULL);
 
@@ -178,7 +178,7 @@ lock_destroy(struct lock *lock);
 }
 
 void
-lock_acquire(struct lock *lock);
+lock_acquire(struct lock *lock)
 {
 	/* Call this (atomically) before waiting for a lock */
 	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
@@ -190,7 +190,7 @@ lock_acquire(struct lock *lock);
 }
 
 void
-lock_release(struct lock *lock);
+lock_release(struct lock *lock)
 {
 	/* Call this (atomically) when the lock is released */
 	//HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
