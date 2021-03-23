@@ -178,7 +178,22 @@ lock_acquire(struct lock *lock)
 	/* Call this (atomically) before waiting for a lock */
 	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
 
-	// Write this
+	lock_create()
+	sem->sem_name = kstrdup(name);
+	if (sem->sem_name == NULL) {
+		kfree(sem);
+		return NULL;
+	}
+
+	sem->sem_wchan = wchan_create(sem->sem_name);
+	if (sem->sem_wchan == NULL) {
+		kfree(sem->sem_name);
+		kfree(sem);
+		return NULL;
+	}
+
+	spinlock_init(&sem->sem_lock);
+	sem->sem_count = initial_count;
 
 	(void)lock;  // suppress warning until code gets written
 
