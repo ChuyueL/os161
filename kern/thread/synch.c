@@ -196,7 +196,7 @@ lock_acquire(struct lock *lock)
 		lock->heldBy = curthread;
 	}
 	else {
-		wchan_sleep(lock->lk_wchan, lock->lk_lock);
+		wchan_sleep(lock->lk_wchan, &lock->lk_lock);
 	}
 	spinlock_release(&lock->lk_lock);
 
@@ -215,7 +215,7 @@ lock_release(struct lock *lock)
 	// Write this
 	spinlock_acquire(&lock->lk_lock);
 	lock->heldBy = NULL;
-	wchan_wakeone(lock->lk_wchan, lock->lk_lock);	
+	wchan_wakeone(lock->lk_wchan, &lock->lk_lock);	
 	spinlock_release(&lock->lk_lock);
 	
 
