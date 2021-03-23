@@ -154,7 +154,7 @@ lock_create(const char *name)
 		return NULL;
 	}
 	
-	lock->lk_chan = wchan_create(lock->lk_name)
+	lock->lk_chan = wchan_create(lock->lk_name);
 		if (lock->lk_chan == NULL) {
 			return NULL
 		}
@@ -167,7 +167,7 @@ lock_create(const char *name)
 }
 
 void
-lock_destroy(struct lock *lock)
+lock_destroy(struct lock *lock);
 {
 	KASSERT(lock != NULL);
 
@@ -178,11 +178,11 @@ lock_destroy(struct lock *lock)
 }
 
 void
-lock_acquire(struct lock *lock)
+lock_acquire(struct lock *lock);
 {
 	/* Call this (atomically) before waiting for a lock */
 	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
-	
+
 	(void)lock;  // suppress warning until code gets written
 
 	/* Call this (atomically) once the lock is acquired */
@@ -190,15 +190,15 @@ lock_acquire(struct lock *lock)
 }
 
 void
-lock_release(struct lock *lock)
+lock_release(struct lock *lock);
 {
 	/* Call this (atomically) when the lock is released */
 	//HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
 
 	// Write this
 	// need to send it the channel and the spin lock
-	spinlock_init(&lock->lk_chan)
-	wchan_wakeone(lock->lk_chan, lock)
+	spinlock_init(&lock->lk_chan);
+	wchan_wakeone(lock->lk_chan, lock);
 
 	(void)lock;  // suppress warning until code gets written
 }
