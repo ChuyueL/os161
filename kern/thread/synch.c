@@ -153,8 +153,13 @@ lock_create(const char *name)
 		kfree(lock);
 		return NULL;
 	}
+	
+	lock->lk_chan = wchan_create(lock->lk_name)
+		if (lock->lk_chan == NULL) {
+			return NULL
+		}
 
-	HANGMAN_LOCKABLEINIT(&lock->lk_hangman, lock->lk_name);
+	//HANGMAN_LOCKABLEINIT(&lock->lk_hangman, lock->lk_name);
 
 	// add stuff here as needed
 
@@ -177,24 +182,7 @@ lock_acquire(struct lock *lock)
 {
 	/* Call this (atomically) before waiting for a lock */
 	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
-
-	lock_create()
-	sem->sem_name = kstrdup(name);
-	if (sem->sem_name == NULL) {
-		kfree(sem);
-		return NULL;
-	}
-
-	sem->sem_wchan = wchan_create(sem->sem_name);
-	if (sem->sem_wchan == NULL) {
-		kfree(sem->sem_name);
-		kfree(sem);
-		return NULL;
-	}
-
-	spinlock_init(&sem->sem_lock);
-	sem->sem_count = initial_count;
-
+	
 	(void)lock;  // suppress warning until code gets written
 
 	/* Call this (atomically) once the lock is acquired */
@@ -208,6 +196,9 @@ lock_release(struct lock *lock)
 	//HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
 
 	// Write this
+	// need to send it the channel and the spin lock
+	spinlock_init(&lock->lk_chan)
+	wchan_wakeone(lock->lk_chan, lock)
 
 	(void)lock;  // suppress warning until code gets written
 }
@@ -215,11 +206,9 @@ lock_release(struct lock *lock)
 bool
 lock_do_i_hold(struct lock *lock)
 {
-	// Write this
-
 	(void)lock;  // suppress warning until code gets written
 
-	return true; // dummy until code gets written
+	return lock->heldBy == curthread;
 }
 
 ////////////////////////////////////////////////////////////
