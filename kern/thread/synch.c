@@ -233,7 +233,7 @@ lock_do_i_hold(struct lock *lock)
 	//(void)lock;  // suppress warning until code gets written
 
 	//return true; // dummy until code gets written
-
+	KASSERT(lock!=NULL);
 	return lock->heldBy == curthread;
 }
 
